@@ -46,3 +46,5 @@ class FollowViewSet(viewsets.ModelViewSet):
     """Вьюсет для подписчиков."""
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+    permission_classes = (IsAuthenticated, )
+
