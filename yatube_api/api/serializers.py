@@ -1,10 +1,10 @@
-from email.policy import default
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from posts.models import Comment, Group, Post, Follow
 
 User = get_user_model()
+
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(

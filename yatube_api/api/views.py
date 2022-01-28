@@ -3,10 +3,12 @@ from rest_framework import filters
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import CommentSerializer, GroupSerializer, PostSerializer, FollowSerializer
+from .serializers import (CommentSerializer, GroupSerializer,
+                          PostSerializer, FollowSerializer)
 from posts.models import Group, Post, Follow
 
 
@@ -15,9 +17,9 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     queryset = Post.objects.all()
-    filter_backends = [DjangoFilterBackend] 
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['group']
-    pagination_class = LimitOffsetPagination 
+    pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -42,6 +44,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         post = get_object_or_404(Post, pk=self.kwargs.get("post_id"))
         return post.comments.all()
+
 
 class FollowViewSet(viewsets.ModelViewSet):
     """Вьюсет для подписчиков."""
