@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
@@ -46,5 +47,12 @@ class FollowViewSet(viewsets.ModelViewSet):
     """Вьюсет для подписчиков."""
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ('user__username', 'following__username', )
 
+    def get_queryset(self):
+        return self.request.user.following.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
