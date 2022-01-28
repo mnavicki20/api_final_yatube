@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -14,7 +13,7 @@ class Post(models.Model):
         upload_to='posts/', null=True, blank=True)
     group = models.ForeignKey(
         'Group', on_delete=models.CASCADE, related_name='posts',
-        blank=True, null=True        
+        blank=True, null=True
     )
 
     def __str__(self):

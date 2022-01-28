@@ -47,12 +47,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FollowViewSet(viewsets.ModelViewSet):
-    """Вьюсет для подписчиков."""
+    """Вьюсет для подписок."""
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-    filterset_fields = ('user', 'following', )
+    filter_backends = [filters.SearchFilter]
     search_fields = ('user__username', 'following__username', )
 
     def get_queryset(self):
