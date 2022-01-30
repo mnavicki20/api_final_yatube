@@ -25,7 +25,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
+        read_only=True, slug_field='username')
 
     class Meta:
         fields = '__all__'
@@ -59,5 +59,4 @@ class FollowSerializer(serializers.ModelSerializer):
         if self.context.get('request').user == following:
             message = 'Отсутствует возможность подписаться на самого себя'
             raise serializers.ValidationError(message)
-        else:
-            return following
+        return following
