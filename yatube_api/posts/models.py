@@ -36,6 +36,13 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='following')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'following'],
+                name='unique_foloowing')
+        ]
+
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
